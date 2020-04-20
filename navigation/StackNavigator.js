@@ -2,9 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
-import TabBarIcon from "../components/TabBarIcon";
+import Colors from "../constants/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
+import NewAccountScreen from "../screens/NewAccountScreen";
+import SelectedAccountScreen from "../screens/SelectedAccountScreen";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -16,17 +18,27 @@ export default function StackNavigator({ navigation, route }) {
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors.tintColor,
+        },
+        headerTintColor: "#fff",
+      }}
+    >
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: "Home Screen" }}
+        options={{
+          title: "ゲーム一覧",
+        }}
       />
       <Stack.Screen
-        name="Links"
-        component={LinksScreen}
-        options={{ title: "Detail Screen" }}
+        name="NewAccount"
+        component={NewAccountScreen}
+        options={{ title: "新規作成" }}
       />
+      <Stack.Screen name="SelectedAccount" component={SelectedAccountScreen} />
     </Stack.Navigator>
   );
 }

@@ -2,6 +2,9 @@ import * as React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
+import { Provider } from "react-redux";
+import Store from "./configureStore";
+import { PersistGate } from "redux-persist/integration/react";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,6 +13,8 @@ import StackNavigator from "./navigation/StackNavigator";
 import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
+
+Store.persistor.purge();
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -47,15 +52,19 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-        <NavigationContainer
-          ref={containerRef}
-          initialState={initialNavigationState}
-        >
-          <StackNavigator />
-        </NavigationContainer>
-      </View>
+      <Provider store={Store.store}>
+        <PersistGate persistor={Store.persistor}>
+          <View style={styles.container}>
+            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            <NavigationContainer
+              ref={containerRef}
+              initialState={initialNavigationState}
+            >
+              <StackNavigator />
+            </NavigationContainer>
+          </View>
+        </PersistGate>
+      </Provider>
     );
   }
 }
