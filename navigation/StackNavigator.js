@@ -7,6 +7,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import NewAccountScreen from "../screens/NewAccountScreen";
 import SelectedAccountScreen from "../screens/SelectedAccountScreen";
+import SelectedGameScreen from "../screens/SelectedGameScreen";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -38,6 +39,7 @@ export default function StackNavigator({ navigation, route }) {
         component={NewAccountScreen}
         options={{ title: "新規作成" }}
       />
+      <Stack.Screen name="SelectedGame" component={SelectedGameScreen} />
       <Stack.Screen name="SelectedAccount" component={SelectedAccountScreen} />
     </Stack.Navigator>
   );

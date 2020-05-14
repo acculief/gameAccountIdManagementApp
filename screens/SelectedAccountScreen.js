@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import Text from "../components/BaseText";
 import SubLabelText from "../components/SubLabelText";
-import LabelText from "../components/LabelText";
 import BorderSection from "../components/BorderSection";
 import { connect } from "react-redux";
 
@@ -38,7 +37,6 @@ export function SelectedAccountScreen(props) {
 
   function getAccountFromId() {
     const { id } = route.params;
-    console.log(accounts);
     const foundAccount = accounts.find((item) => {
       return item.id === id;
     });

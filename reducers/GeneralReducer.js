@@ -24,11 +24,10 @@ const INITIAL_STATE = {
 
 const GeneralReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "success_check_notification":
+    case "create_new_account":
       return {
         ...state,
-        todo_list_count: action.todo_list_count,
-        unopened_notification: action.unopened_notification,
+        accounts: action.accounts,
       };
     default:
       return state;

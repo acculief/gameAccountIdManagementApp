@@ -9,6 +9,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 import Text from "../components/BaseText";
 import ListItem from "../components/ListItem";
@@ -26,20 +27,28 @@ export function HomeScreen(props) {
         onPress={() => navigation.navigate("NewAccount")}
         style={{ marginRight: 15 }}
       >
-        <Text style={{ color: "white" }}>+</Text>
+        <Text style={{ color: "white" }}>新規作成</Text>
       </TouchableOpacity>
     ),
   });
 
-  useEffect(() => {
-    setGameLists();
-  }, []);
+  // component will receive props + navigation events
+  useFocusEffect(
+    React.useCallback(() => {
+      // did focus
+      setGameLists(props.accounts);
+      return () => {
+        // out of focus
+      };
+    }, [props.accounts])
+  );
 
-  function setGameLists() {
+  function setGameLists(accounts) {
+    setGames([]);
     let gameTitleWithID = [];
+
     // ゲームごとにidを集めるアルゴリズム
-    props.accounts.forEach((val1, key1, arr1) => {
-      console.log(val1);
+    accounts.forEach((val1, key1, arr1) => {
       if (gameTitleWithID.length == 0) {
         return gameTitleWithID.push({
           gameTitle: val1.gameTitle,
@@ -57,7 +66,6 @@ export function HomeScreen(props) {
         }
       });
     });
-    console.log(gameTitleWithID);
     setGames(gameTitleWithID);
   }
 
@@ -71,7 +79,7 @@ export function HomeScreen(props) {
           } else {
             navigation.navigate("SelectedGame", {
               gameTitle: item.gameTitle,
-              ids: item.ids[0],
+              ids: item.ids,
             });
           }
         }}
@@ -80,7 +88,7 @@ export function HomeScreen(props) {
   };
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={{ marginHorizontal: 15 }}>
+      <ScrollView style={{ paddingHorizontal: 15 }}>
         <FlatList
           scrollEnabled={false}
           data={games}

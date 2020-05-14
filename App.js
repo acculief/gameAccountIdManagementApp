@@ -14,7 +14,7 @@ import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
 
-Store.persistor.purge();
+// Store.persistor.purge();
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
